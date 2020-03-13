@@ -1,8 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addTodo } from '../actions'
-import { API, graphqlOperation } from "aws-amplify";
+import Amplify, { API, graphqlOperation } from "aws-amplify";
 import * as mutations from '../graphql/mutations';
+
+
+let myAppConfig = {
+  aws_appsync_graphqlEndpoint:
+      'https://7sonzasi4nhgvdvxvzetrh5hhi.appsync-api.us-east-1.amazonaws.com/graphql',
+  aws_appsync_region: 'us-east-1',
+  aws_appsync_authenticationType: 'API_KEY',
+  aws_appsync_apiKey: 'da2-kxsttu7eynft5chxs476a75xuq'
+};
+
+Amplify.configure(myAppConfig);
 
 const AddTodo = ({ dispatch }) => {
   let input
@@ -15,7 +26,7 @@ const AddTodo = ({ dispatch }) => {
     // Mutation
     const todoDetails = {
       id: Math.trunc(Math.random()*100), 
-      name: 'input.value',
+      name: input.value,
       description: 'TODO all over'
     };
 
